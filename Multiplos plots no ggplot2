@@ -1,0 +1,51 @@
+###Criando varias plots com ggplot2####
+#***************Maite 2022**********************#
+
+library(ggplot2) #Carregar os pacotes
+library(reshape2)
+library(patchwork)
+
+# Ajeitando os dados para criar 2 regressões com a função melt()
+ordenar_x0 <- c(x0,x0_teste)
+ordenar_x1 <- c(x1,x1_teste)
+ordenar_x2 <- c(x2,x2_teste)
+ordenar_x3 <- c(x3,x3_teste)
+ordenar_x4 <- c(x4,x4_teste)
+
+dados_xmin0 <- cbind(c(y0,y0_teste),ordenar_x0)
+dados_xmin1 <- cbind(c(y1,y1_teste),ordenar_x0)
+dados_xmin2 <- cbind(c(y2,y2_teste),ordenar_x0)
+dados_xmin3 <- cbind(c(y3,y3_teste),ordenar_x0)
+dados_xmin4 <- cbind(c(y4,y4_teste),ordenar_x0)
+
+dados_xmin0 <- as.data.frame(dados_xmin0)
+dados_xmin1 <- as.data.frame(dados_xmin1)
+dados_xmin2 <- as.data.frame(dados_xmin2)
+dados_xmin3 <- as.data.frame(dados_xmin3)
+dados_xmin4 <- as.data.frame(dados_xmin4)
+
+dados_xminMelt0 <- melt(dados_xmin0, id.vars = "ordenar_x0")
+dados_xminMelt1 <- melt(dados_xmin1, id.vars = "ordenar_x0")
+dados_xminMelt2 <- melt(dados_xmin2, id.vars = "ordenar_x0")
+dados_xminMelt3 <- melt(dados_xmin3, id.vars = "ordenar_x0")
+dados_xminMelt4 <- melt(dados_xmin4, id.vars = "ordenar_x0")
+
+g0 = ggplot(dados_xminMelt0, aes(x = ordenar_x0, y = value)) +
+  geom_smooth(method = 'lm', formula = y ~x) + geom_point() +
+  labs(y = expression(y^min), x = expression(x^min))
+
+g1 = ggplot(dados_xminMelt1, aes(x = ordenar_x0, y = value)) +
+  geom_smooth(method = 'lm', formula = y ~x) + geom_point() +
+  labs(y = expression(y^Q1), x = expression(x^min))
+
+g2 = ggplot(dados_xminMelt2, aes(x = ordenar_x0, y = value)) +
+  geom_smooth(method = 'lm', formula = y ~x) + geom_point() +
+  labs(y = expression(y^Q2), x = expression(x^min))
+
+g3 = ggplot(dados_xminMelt3, aes(x = ordenar_x0, y = value)) +
+  geom_smooth(method = 'lm', formula = y ~x) + geom_point() +
+  labs(y = expression(y^Q3), x = expression(x^min))
+
+g4 = ggplot(dados_xminMelt4, aes(x = ordenar_x0, y = value)) +
+  geom_smooth(method = 'lm', formula = y ~x) + geom_point() +
+  labs(y = expression(y^max), x = expression(x^min))
